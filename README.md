@@ -37,8 +37,13 @@ If the LiDAR points and visualization markers are not appearing, then you may ha
 5. If you do not have your laser scan topic name or base frame data, you can check it via the terminal. Open the terminal and type: rostopic list. Find the name of your laser scan topic within the list, often /scan or /scan_filtered on the Robile and /hsrb/base_scan for HSR. 
 6. To find the base frame of the topic, enter: rostopic echo topic_name -n 1. Replace topic_name with the name of your scan topic. This will echo the first message from the topic. Scroll to the top of the message, where the header is. The frame_id paramter will show the name of the base frame for the scan topic. The minimum and maximum angles of the LiDAR view are also given here in radians (as well as the angle increment), and the minimum and maximum range of the LiDAR is given in meters. 
 
-# Output of the package
-The package publishes multiple topics.
+# Subscribed topics
+
+/hsrb/base_scan: you can change the subscribed scan topic by changing the parameter "scan_topic" in the launch file.
+
+/tf: to get the transforms. You should specify the fixed frame by the parameter "fixed_frame" in the launch file.
+
+# Published topics
 
 /visualization_marker : This publishes the visualization markers, which represent people detected from pairs of legs. The markers are mainly used by RVIZ. The markers share a base frame, given by frame_id, and each has a position given in meters with (x,y,z) coordinates. The orientation is always zero because the package cannot detect which way the person is facing from leg positions.
 
@@ -46,12 +51,18 @@ The package publishes multiple topics.
 
 /detected_leg_clusters : This publishes all of the detected leg clusters. Each has an (x,y,z) position and a confidence. 
 
+## Working:
+1. Person will be detected using the leg pairs.
+2. Robot will get the detetced person position and will follow the person.  
+
 # Tunable parameters
 To add a parameter to the launch file, use the following format: 
 
 <param name="parameter_name" value="parameter_value" />
 
 Replace parameter_name and parameter_value with the appropriate names and values. Useful parameters are described below.
+
+## detect_leg_cluster.cpp
 
 1. max_detected_clusters
 
@@ -77,22 +88,24 @@ The minimum number of points necessary to create a cluster. The default value is
 
 The maximum distance at which clusters will be detected. Reducing this value improves run speed. The default value is 10 meters.
 
-7. max_leg_pairing_dist
+## joint_leg_tracker_follow.py
+
+1. max_leg_pairing_dist
 
 The maximum distance between a pair of legs for them to be considered as belonging to the same individual. The default value is 0.8 meters.
 
-8. confidence_threshold_to_maintain_track
+2. confidence_threshold_to_maintain_track
 
 The confidence threshold determines how confident the model must be that a set of clusters are legs to begin and maintain a person track. The default value is 0.1, but it must be retuned if the leg detector is retrained.
 
-9. dist_travelled_together_to_initiate_leg_pair
+3. dist_travelled_together_to_initiate_leg_pair
 
-The distance a pair of legs must travel together to begin person tracking.
+The distance a pair of legs must travel together to begin person tracking. The default value is 0.5 meters.
 
-10. confidence_percentile
+4. confidence_percentile
 
-The confidence percentile used for matching clusters to person tracks. Increasing the percentile increases the distance with which tracks will match to new clusters. These distances are called gates, and are visible as circles around the person visualization markers in RVIZ. The default value is 0.9.
+The confidence percentile used for matching clusters to person tracks. Increasing the percentile increases the distance with which tracks will match to new clusters. These distances are called gates, and are visible as circles around the person visualization markers in RVIZ. The default value is 0.6.
 
-11. max_std
+5. max_std
 
 The maximum standard deviation of the covariance of a track. If the track's covariance exceeds this, the track is deleted. The default value is 0.9.
