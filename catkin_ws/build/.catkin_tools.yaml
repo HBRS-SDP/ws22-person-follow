@@ -1,6 +1,6 @@
-devel_space: /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel
+devel_space: /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel
 install: false
-install_space: /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/install
+install_space: /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/install
 profile: default
-source_space: /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src
-workspace: /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws
+source_space: /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src
+workspace: /home/ws22-sdp-follow/ws22-person-follow/catkin_ws

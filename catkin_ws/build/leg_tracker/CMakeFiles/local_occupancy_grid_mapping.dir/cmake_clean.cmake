@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/leg_tracker/local_occupancy_grid_mapping"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/leg_tracker/local_occupancy_grid_mapping.pdb"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/leg_tracker/local_occupancy_grid_mapping"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/leg_tracker/local_occupancy_grid_mapping.pdb"
   "CMakeFiles/local_occupancy_grid_mapping.dir/src/laser_processor.cpp.o"
   "CMakeFiles/local_occupancy_grid_mapping.dir/src/local_occupancy_grid_mapping.cpp.o"
 )
