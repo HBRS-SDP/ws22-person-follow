@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker/src/laser_processor.cpp" "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker/CMakeFiles/local_occupancy_grid_mapping.dir/src/laser_processor.cpp.o"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker/src/local_occupancy_grid_mapping.cpp" "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker/CMakeFiles/local_occupancy_grid_mapping.dir/src/local_occupancy_grid_mapping.cpp.o"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker/src/laser_processor.cpp" "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker/CMakeFiles/local_occupancy_grid_mapping.dir/src/laser_processor.cpp.o"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker/src/local_occupancy_grid_mapping.cpp" "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker/CMakeFiles/local_occupancy_grid_mapping.dir/src/local_occupancy_grid_mapping.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,9 +18,9 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker/INCLUDE"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker/include"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker/INCLUDE"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/usr/include/opencv4"

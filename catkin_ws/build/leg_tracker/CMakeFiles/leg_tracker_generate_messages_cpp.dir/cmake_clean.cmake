@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/Leg.h"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/LegArray.h"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/Person.h"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/PersonArray.h"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/Leg.h"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/LegArray.h"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/Person.h"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include/leg_tracker/PersonArray.h"
   "CMakeFiles/leg_tracker_generate_messages_cpp"
 )
 

@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/usr/src/googletest")
-set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker")
 
 # Force unix paths in dependencies.
 set(CMAKE_FORCE_UNIX_PATHS 1)

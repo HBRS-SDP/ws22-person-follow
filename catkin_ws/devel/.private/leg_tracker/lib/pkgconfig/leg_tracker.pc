@@ -1,8 +1,8 @@
-prefix=/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker
+prefix=/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker
 
 Name: leg_tracker
 Description: Description of leg_tracker
 Version: 0.0.0
-Cflags: -I/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/include
+Cflags: -I/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/include
 Libs: -L${prefix}/lib 
 Requires: message_runtime

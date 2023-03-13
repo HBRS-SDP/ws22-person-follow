@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker
+CMAKE_SOURCE_DIR = /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker
+CMAKE_BINARY_DIR = /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker
 
 # Utility rule file for clean_test_results.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker/test_results
+	/usr/bin/python3 /opt/ros/noetic/share/catkin/cmake/test/remove_test_results.py /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
@@ -71,6 +71,6 @@ CMakeFiles/clean_test_results.dir/clean:
 .PHONY : CMakeFiles/clean_test_results.dir/clean
 
 CMakeFiles/clean_test_results.dir/depend:
-	cd /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/src/leg_tracker /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker /home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/src/leg_tracker /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker /home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker/CMakeFiles/clean_test_results.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/clean_test_results.dir/depend
 

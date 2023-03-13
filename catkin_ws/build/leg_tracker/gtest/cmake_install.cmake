@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/build/leg_tracker/gtest/googlemock/cmake_install.cmake")
+  include("/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/build/leg_tracker/gtest/googlemock/cmake_install.cmake")
 
 endif()
 

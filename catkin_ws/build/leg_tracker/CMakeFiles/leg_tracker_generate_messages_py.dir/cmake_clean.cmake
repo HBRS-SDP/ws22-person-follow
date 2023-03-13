@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_Leg.py"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_LegArray.py"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_Person.py"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_PersonArray.py"
-  "/home/ws22-sdp-follow/ss22-robile-people-detection/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/__init__.py"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_Leg.py"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_LegArray.py"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_Person.py"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/_PersonArray.py"
+  "/home/ws22-sdp-follow/ws22-person-follow/catkin_ws/devel/.private/leg_tracker/lib/python3/dist-packages/leg_tracker/msg/__init__.py"
   "CMakeFiles/leg_tracker_generate_messages_py"
 )
 
