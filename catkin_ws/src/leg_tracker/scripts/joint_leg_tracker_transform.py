@@ -201,7 +201,7 @@ class KalmanMultiTracker:
         scan_topic = rospy.get_param("scan_topic", "/hsrb/base_scan");
         self.scan_frequency = rospy.get_param("scan_frequency", 7.5)
         self.in_free_space_threshold = rospy.get_param("in_free_space_threshold", 0.06)
-        self.confidence_percentile = rospy.get_param("confidence_percentile", 0.60) # 0.6
+        self.confidence_percentile = rospy.get_param("confidence_percentile", 0.90) # 0.6
         self.max_std = rospy.get_param("max_std", 0.9)
 
         self.mahalanobis_dist_gate = scipy.stats.norm.ppf(1.0 - (1.0-self.confidence_percentile)/2., 0, 1.0)
@@ -792,7 +792,7 @@ class KalmanMultiTracker:
 
                     pose_var = new_person.pose
 
-                    # temp_x = new_person.pose.position.x
+                    temp_x = new_person.pose.position.x
                     temp_y = new_person.pose.position.y
                     temp_yaw = yaw
                     temp_yaw2 = yaw2
@@ -802,15 +802,19 @@ class KalmanMultiTracker:
                         pass
                     else:
                         if break_true == True:
-                            if first_position == True:
-                                print("Calling Move ...............................................................................................")
-                                # self.move(temp_x,temp_y,temp_yaw,temp_yaw2) 
-                                first_position = False 
-                                self.move()
-                            else:
-                                print(' No movement *******************************************************************************************')
-
-                        ####  ELSE  ADD THE OUT OF FOCUS CODE   
+                            if break_true == True:
+                                print(temp_x , temp_y)
+                                print('Person detected')
+                                
+                                # if first_position == True:
+                                #     print("Calling Move ...............................................................................................")
+                                #     # self.move(temp_x,temp_y,temp_yaw,temp_yaw2) 
+                                #     first_position = False 
+                                #     self.move()
+                                # else:
+                                if abs(round(temp_x,1) - round(self.x_robot,1)) > 1.0 or abs(round(temp_x,1) - round(self.x_robot,1)) > 1.0:
+                                    print('Calling Move .......................................................................................')
+                                    # self.move() 
 
         # Clear previously published people markers
         for m_id in range(marker_id, self.prev_person_marker_id):
