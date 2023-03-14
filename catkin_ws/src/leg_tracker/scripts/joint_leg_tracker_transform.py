@@ -28,8 +28,6 @@ import timeit
 import message_filters
 import sys
 
-import datetime as dt
-
 # External modules
 from pykalman import KalmanFilter # To install: http://pykalman.github.io/#installation
 
@@ -39,11 +37,11 @@ import tf2_geometry_msgs
 
 
 # Global variables
-temp_x, temp_y, temp_yaw, temp_yaw2 = 0, 0, 0, 0
-first_position, is_rotate = True, True
-pose_var = 0
-flag_x, flag_y, flag_yaw = False, False, False
-break_true = False
+temp_x, temp_y, temp_yaw, temp_yaw2 = 0, 0, 0, 0    # values of person : x, y, yaw wrt. velocity, yaw wrt.position
+first_position = True   # checks if the position is detected for the first time
+pose_var = 0    # person pose
+flag_x, flag_y = False, False   # checks if stopping criteria achieved 
+break_true = False  # person is detected or not
 
 
 class DetectedCluster:
@@ -191,17 +189,17 @@ class KalmanMultiTracker:
 
         # Get ROS params
         self.fixed_frame = rospy.get_param("fixed_frame", "odom")
-        self.max_leg_pairing_dist = rospy.get_param("max_leg_pairing_dist", 0.8) # 0.5
+        self.max_leg_pairing_dist = rospy.get_param("max_leg_pairing_dist", 0.8)
         self.confidence_threshold_to_maintain_track = rospy.get_param("confidence_threshold_to_maintain_track", 0.1)
         self.publish_occluded = rospy.get_param("publish_occluded", True)
         self.publish_people_frame = rospy.get_param("publish_people_frame", self.fixed_frame)
         self.use_scan_header_stamp_for_tfs = rospy.get_param("use_scan_header_stamp_for_tfs", False)
         self.publish_detected_people = rospy.get_param("display_detected_people", False)        
-        self.dist_travelled_together_to_initiate_leg_pair = rospy.get_param("dist_travelled_together_to_initiate_leg_pair", 0.5) # 0.3
+        self.dist_travelled_together_to_initiate_leg_pair = rospy.get_param("dist_travelled_together_to_initiate_leg_pair", 0.5)
         scan_topic = rospy.get_param("scan_topic", "/hsrb/base_scan");
         self.scan_frequency = rospy.get_param("scan_frequency", 7.5)
         self.in_free_space_threshold = rospy.get_param("in_free_space_threshold", 0.06)
-        self.confidence_percentile = rospy.get_param("confidence_percentile", 0.60) # 0.6
+        self.confidence_percentile = rospy.get_param("confidence_percentile", 0.60)
         self.max_std = rospy.get_param("max_std", 0.9)
 
         self.mahalanobis_dist_gate = scipy.stats.norm.ppf(1.0 - (1.0-self.confidence_percentile)/2., 0, 1.0)
@@ -625,7 +623,6 @@ class KalmanMultiTracker:
 
             # Clear previously published track markers
             for m_id in range(marker_id, self.prev_track_marker_id):
-                print('in for m_id loop')
                 marker = Marker()
                 marker.header.stamp = now                
                 marker.header.frame_id = self.publish_people_frame
@@ -647,7 +644,6 @@ class KalmanMultiTracker:
         people_tracked_msg.header.stamp = now
         people_tracked_msg.header.frame_id = self.publish_people_frame        
         marker_id = 0
-        print('people_tracked_msg.header.stamp : ',people_tracked_msg.header.stamp)
         break_true = False
 
         # Make sure we can get the required transform first:
@@ -670,7 +666,7 @@ class KalmanMultiTracker:
             for person in self.objects_tracked:
                 if person.is_person == True:
                     if self.publish_occluded or person.seen_in_current_scan: # Only publish people who have been seen in current scan, unless we want to publish occluded people
-                        break_true = True
+                        break_true = True # person is detected when break_true is True
                         # Get position in the <self.publish_people_frame> frame 
                         ps = PointStamped()
                         ps.header.frame_id = self.fixed_frame
@@ -689,17 +685,13 @@ class KalmanMultiTracker:
                         new_person.pose.position.y = ps.point.y 
                         yaw = math.atan2(person.vel_y, person.vel_x)
                         yaw2 = math.atan2(new_person.pose.position.y, new_person.pose.position.x)
-                        print('Yaw from person position & velocity : ', np.rad2deg(yaw2), np.rad2deg(yaw))
                         quaternion = tf.transformations.quaternion_from_euler(0, 0, yaw)
-                        # print('\nQuar_x: {}\nQuat_y:{}\nQuat_z:{}\nQuat_w:{}\n\n'.format(quaternion[0],quaternion[1],quaternion[2],quaternion[3]))
                         new_person.pose.orientation.x = quaternion[0]
                         new_person.pose.orientation.y = quaternion[1]
                         new_person.pose.orientation.z = quaternion[2]
                         new_person.pose.orientation.w = quaternion[3] 
                         new_person.id = person.id_num 
-                        # print('New_person_id :',new_person.id)
                         people_tracked_msg.people.append(new_person)
-                        print('People_tracked_msg : ',people_tracked_msg.people)
 
                         # publish rviz markers       
                         # Cylinder for body 
@@ -714,7 +706,6 @@ class KalmanMultiTracker:
                         marker.pose.position.x = ps.point.x 
                         marker.pose.position.y = ps.point.y
                         marker.id = marker_id
-                        # print('Person marker.id : ',marker.id)
                         marker_id += 1
                         marker.type = Marker.CYLINDER
                         marker.scale.x = 0.2
@@ -742,7 +733,6 @@ class KalmanMultiTracker:
                         marker_id += 1
                         marker.type = Marker.TEXT_VIEW_FACING
                         marker.text = str(person.id_num)
-                        # print('Marker.text : ',marker.text)
                         marker.scale.z = 0.2         
                         marker.pose.position.z = 1.7
                         self.marker_pub.publish(marker)
@@ -798,33 +788,17 @@ class KalmanMultiTracker:
                     temp_yaw2 = yaw2
 
                     if temp_x == 0 and temp_y == 0 and temp_yaw == 0:
-                        print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
                         pass
                     else:
                         if break_true == True:
                             if break_true == True:
-                                print(temp_x , temp_y)
-                                print('Person detected')
                                 if first_position == True:
-                                    print("Calling Move ...............................................................................................")
-                                    # self.move(temp_x,temp_y,temp_yaw,temp_yaw2) 
                                     first_position = False 
                                     self.move()
                                 else:
                                     if abs(round(temp_x,1) - round(self.x_robot,1)) > 0.5 or abs(round(temp_x,1) - round(self.x_robot,1)) > 0.5:
-                                        print('Moving the robot .......................................................................................')
                                         self.move() 
-                                #     x_vel = (round(temp_x,1) - round(self.x_robot,1))*0.4
-                                #     y_vel = (round(temp_y,1) - round(self.y_robot,1))*0.4
-                                #     print('Publishing the velocity ......')
-                                #     tw.linear.x = x_vel
-                                #     tw.linear.y = y_vel
                                     
-                                #     self.pub.publish(tw)
-                                    print('Published & hopefully move robot in the correct direction \n')
-                                    
-
-
         # Clear previously published people markers
         for m_id in range(marker_id, self.prev_person_marker_id):
             marker = Marker()
@@ -839,70 +813,9 @@ class KalmanMultiTracker:
         # Publish people tracked message
         self.people_tracked_pub.publish(people_tracked_msg) 
         
-        
-    # def rotate_robot(self, yaw, yaw2, y, x):
-    #     # People frame : Base_link | Robot frame : Odom
-    #     yaw_person = 0 # wrt Base_link
-    #     # print('person yaw2 : ',yaw2)
-    #     print('Robot position: ',self.x_robot, self.y_robot, self.yaw_robot, np.rad2deg(self.yaw_robot))
-
-    #     if y < 0:
-    #         if x != 0 :
-    #             yaw_person = min(yaw, yaw2)
-    #             print('y<0 Min of Yaw taken here : ', np.rad2deg(yaw_person))
-    #         else:
-    #             yaw_person = 0
-    #             print(' y<0 but x==0 : ',yaw_person)
-    #     elif y > 0:
-    #         if x != 0 :
-    #             yaw_person = max(yaw, yaw2)
-    #             print('y>0 Max of Yaw taken here : ', np.rad2deg(yaw_person))
-    #         else:
-    #             yaw_person = 0 
-    #             print(' y>0 but x==0 : ',yaw_person)
-
-    #     # Determine direction and to rotate or not based on the distance from robot(wrt Odom) to person(wrt base_link)...
-    #     if round(y,1) != 0.0:
-    #         if abs(round(y,1)) <= 0.5:
-    #             if round(yaw_person,0) < round(self.yaw_robot,0):
-    #                 KalmanMultiTracker.ang_vel = -0.5
-    #             elif round(yaw_person,0) > round(self.yaw_robot,0):
-    #                 KalmanMultiTracker.ang_vel = 0.5
-    #             elif round(yaw_person,0) == round(self.yaw_robot,0):
-    #                 KalmanMultiTracker.ang_vel = 0
-    #         elif abs(round(y,1)) > 0.5: # x_person > 0.5
-    #             if y < 0:
-    #                 KalmanMultiTracker.ang_vel = -0.5
-    #             elif y > 0:
-    #                 KalmanMultiTracker.ang_vel = 0.5
-    #     else: # y_person = 0
-    #         KalmanMultiTracker.ang_vel = 0
-
-
-    #     rospy.wait_for_service('/hsrb/controller_manager/list_controllers')
-    #     list_controllers = rospy.ServiceProxy('/hsrb/controller_manager/list_controllers', controller_manager_msgs.srv.ListControllers)
-    #     running = False
-    #     while running is False:
-    #         rospy.sleep(0.1)
-    #         for c in list_controllers().controller:
-    #             if c.name == 'omni_base_controller' and c.state == 'running':
-    #                 running = True
-        
-    #     tw = geometry_msgs.msg.Twist()
-    #     tw.angular.z = KalmanMultiTracker.ang_vel
-
-    #     print('Ang vel : ',KalmanMultiTracker.ang_vel)
-    #     # print('Robot position: ',self.x_robot, self.y_robot, self.yaw_robot, np.rad2deg(self.yaw_robot))
-    #     print('\n\n')
-
-    #     self.pub.publish(tw) 
-
-
+ 
     def move(self):
         global temp_yaw, temp_yaw2, temp_x, temp_y, pose_var, flag_y, flag_x
-
-
-    #     print('Move : {}\n'.format(dt.datetime.now()))
 
         rospy.wait_for_service('/hsrb/controller_manager/list_controllers')
         list_controllers = rospy.ServiceProxy('/hsrb/controller_manager/list_controllers', controller_manager_msgs.srv.ListControllers)
@@ -914,33 +827,22 @@ class KalmanMultiTracker:
                     running = True
         tw = geometry_msgs.msg.Twist()
 
-        # Person pose wrt base_link        
+        # Person pose wrt odom        
         yaw = temp_yaw
         yaw2 = temp_yaw2
         x = temp_x
         y = temp_y
-        print('Robot position : ',self.x_robot, self.y_robot, self.yaw_robot, np.rad2deg(self.yaw_robot))
-        # Transform person pose from base_link to odom
-        person_transformed_pose = self.transform_pose(pose_var, 'odom', 'odom')
-        print('Transformed pose : \n',person_transformed_pose)
 
+        person_transformed_pose = self.transform_pose(pose_var, 'odom', 'odom') 
         y_vel, x_vel = 0,0
         
-        y_vel = (round(person_transformed_pose.position.y,1) - round(self.y_robot,1))*0.4
-        
-        print(round(abs(round(person_transformed_pose.position.y,1) - round(self.y_robot,1)),1))
-        print('flag_y : ',flag_y)
+        y_vel = (round(person_transformed_pose.position.y,1) - round(self.y_robot,1))*0.4        
         
         if abs(round(person_transformed_pose.position.x,1) - round(self.x_robot,1)) < 0.8:
             x_vel = (round(person_transformed_pose.position.x,1) - round(self.x_robot,1))*0.4
             flag_x = True
-            print('6')
         else:
             x_vel = 0.1
-            print('7')
-
-        print(abs(round(person_transformed_pose.position.x,1) - round(self.x_robot,1)))
-        print('flag_x : ',flag_x)
 
         tw.linear.x = x_vel
         tw.linear.y = y_vel
@@ -961,7 +863,6 @@ class KalmanMultiTracker:
         tf_time = rospy.Time(0)
         tf_buffer = tf2_ros.Buffer()
         listener = tf2_ros.TransformListener(tf_buffer)
-        # listener.waitForTransform(from_frame, to_frame, tf_time, rospy.Duration(1.0))
 
         pose_stamped = tf2_geometry_msgs.PoseStamped()
         pose_stamped.pose = input_pose
@@ -972,7 +873,6 @@ class KalmanMultiTracker:
             # ** It is important to wait for the listener to start listening. Hence the rospy.Duration(1)
             output_pose_stamped = tf_buffer.transform(pose_stamped, to_frame    , rospy.Duration(1.0))
             return output_pose_stamped.pose
-
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             raise
         
@@ -980,8 +880,6 @@ class KalmanMultiTracker:
 if __name__ == '__main__':
     rospy.init_node('multi_person_tracker', anonymous=True)
     print('Rospy initialised')
-    # global temp_x, temp_y, temp_yaw, break_true
-    # temp_x, temp_y, temp_yaw, break_true = 0,0,0,False
     while not rospy.is_shutdown():
         try:
             kmt = KalmanMultiTracker()
